@@ -5,3 +5,4 @@ pandas
 matplotlib
 google-api-python-client
 textblob
+gunicorn
