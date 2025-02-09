@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Youtube Sentiment Analysis</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+          background: linear-gradient(to right, #d5d5d5, #ffffff);
+         }
+    </style>
+</head>
+
+<body class="bg-gray-100 bg-opacity-90 py-10 px-4 sm:px-6 lg:px-8" style="font-family: Poppins;">
+    
+    <div class="text-center">
+        <h1 class="text-4xl sm:text-5xl font-bold text-blue-600 mb-6">AI Mood Review Analyser - Youtube</h1>
+    </div>
+    
+    <div class="max-w-4xl mx-auto bg-white bg-opacity-90 shadow-lg rounded-lg p-6">
+        <form action="{{url_for('predict')}}" method="post">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="relative w-full">
+                    <input class="appearance-none border-2 border-gray-300 rounded-md w-full px-12 py-3 text-gray-800 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" name="url_name" id="username" type="text" placeholder="Enter Youtube URL ..."/>
+                    <div class="absolute left-4 inset-y-0 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow">Analyze</button>
+            </div>
+        </form>
+
+        <div class="mt-6">
+            <ul class="flex flex-wrap justify-center space-x-4 border-b pb-4">
+                <li class="px-4 py-2 text-gray-600 bg-gray-200 rounded-lg cursor-pointer">All ({{length_of_dict}})</li>
+                <li class="px-4 py-2 text-green-600 bg-green-100 rounded-lg cursor-pointer">Positive ({{positive_count}})</li>
+                <li class="px-4 py-2 text-red-600 bg-red-100 rounded-lg cursor-pointer">Negative ({{negative_count}})</li>
+                <li class="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg cursor-pointer">Neutral ({{neutral_count}})</li>
+            </ul>
+        </div>
+
+        <div class="mt-4 space-y-2">
+            {% for eachitem in sentiments_dict %}
+                {% for i, j in eachitem.items() %} 
+                    {% if j == 'Positive' %}  
+                        <div class="bg-green-100 text-green-800 p-3 rounded-lg shadow">{{ i }}</div>
+                    {% elif j == 'Negative' %}
+                        <div class="bg-red-100 text-red-800 p-3 rounded-lg shadow">{{ i }}</div>
+                    {% elif j == 'Neutral' %}
+                        <div class="bg-gray-200 text-gray-800 p-3 rounded-lg shadow">{{ i }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="mt-10 text-center py-4 bg-gray-200 text-gray-700 font-medium bg-opacity-90">
+        Designed and developed by Vedang Jani and Devang Nayak
+    </footer>
+</body>
+</html>
